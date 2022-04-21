@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  adminer:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+      ADMINER_DESIGN: mancave
+    restart: always
+    ports:
+      - '8080:8080'
+
+  db:
+    image: mysql:8.0.4
+    build:
+      context: ./
+      dockerfile: .dockerfiles/db
+    environment:
+      MYSQL_DATABASE: 'student_db'
+      MYSQL_ROOT_PASSWORD: 'secret'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'admin'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - /var/lib/mysql
+    restart: always
